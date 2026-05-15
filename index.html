@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BetonTech — Majstori betonskih podova</title>
+  <meta name="description" content="BetonTech – stručnjaci za cementni estrih, samonivelacijske mase i industrijske podove u cijeloj Hrvatskoj.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg:         #0C0B09;
+      --bg2:        #131210;
+      --surface:    #1A1815;
+      --surface2:   #221F1A;
+      --ink:        #F0EBE3;
+      --ink2:       #857B72;
+      --dim:        #524D48;
+      --border:     rgba(255,255,255,0.08);
+      --red:        #CC0000;
+      --red-h:      #E50000;
+      --red-glow:   rgba(204,0,0,0.15);
+      --nav-h:      64px;
+      --font-display: 'Unbounded', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      transition: background 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: rgba(8,7,10,0.92);
+      backdrop-filter: blur(12px);
+      border-color: var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--red);
+      border: 1px solid rgba(204,0,0,0.4);
+      padding: 8px 20px;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+    }
+
+    .burger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+    .burger span {
+      display: block;
+      height: 1px;
+      background: var(--ink);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── MOBILE MENU ─────────────────────────────────────── */
+    .mob-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .mob-overlay.open { opacity: 1; pointer-events: all; }
+    .mob-overlay a {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 8vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mob-overlay a:hover { color: var(--red); }
+    .mob-overlay .mob-cta {
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid rgba(204,0,0,0.5);
+      padding: 14px 32px;
+      text-decoration: none;
+    }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 70% 50% at 30% 60%, rgba(204,0,0,0.12) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(8,7,10,0.18) 0%, rgba(8,7,10,0.42) 45%, rgba(8,7,10,0.92) 100%),
+        url('photos/new-one.png');
+      background-size: cover;
+      background-position: center 30%;
+      background-color: var(--bg);
+    }
+
+    /* Concrete texture via SVG noise */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* Animated grid lines */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.035;
+      background-image:
+        linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      padding: calc(var(--nav-h) + 20px) 60px 70px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 40px;
+      max-width: 1440px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 7.5vw, 114px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .hero-title .red { color: var(--red); }
+
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink2);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red);
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--red-h);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink2);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink2); }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 28px;
+      padding-bottom: 8px;
+    }
+
+    .hero-stat {
+      text-align: right;
+    }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .hero-stat-num em { color: var(--red); font-style: normal; }
+    .hero-stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      margin-top: 4px;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+    }
+    .hero-scroll span {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      writing-mode: vertical-lr;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--dim), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.6); }
+    }
+
+    /* ─── 3D LAYER SECTION ───────────────────────────────── */
+    .layer-wrapper {
+      height: 520vh;
+      position: relative;
+    }
+
+    .layer-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 58% 42%;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .layer-sticky::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.04) 3px,
+        rgba(0,0,0,0.04) 4px
+      );
+    }
+
+    .scene-wrap {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scene-wrap::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(204,0,0,0.05) 0%, transparent 70%);
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .scene {
+      position: relative;
+      width: 100%; height: 100%;
+      perspective: 900px;
+      perspective-origin: 50% 58%;
+    }
+
+    .stage {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 400px; height: 250px;
+      margin-left: -200px; margin-top: -80px;
+      transform-style: preserve-3d;
+      transform: rotateX(68deg) rotateZ(-22deg);
+    }
+
+    .l-slab {
+      position: absolute;
+      top: 0; left: 0;
+      width: 420px; height: 260px;
+      transform-style: preserve-3d;
+      opacity: 0;
+      transform: translateZ(-300px);
+      will-change: transform, opacity;
+      transition: transform 0.9s cubic-bezier(0.34,1.56,0.64,1), opacity 0.6s ease;
+    }
+
+    .slab-top {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    /* Video on slab top face */
+    .slab-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .slab-video.playing { opacity: 1; }
+
+    .slab-front {
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%; height: var(--t, 14px);
+      transform-origin: bottom center;
+      transform: rotateX(-90deg);
+    }
+
+    .slab-right {
+      position: absolute;
+      right: 0; top: 0;
+      width: var(--t, 14px); height: 100%;
+      transform-origin: right center;
+      transform: rotateY(90deg);
+    }
+
+    .l-slab[data-idx="0"] { --t: 54px; }
+    .l-slab[data-idx="0"] .slab-top {
+      background-color: #0a0a0a;
+      background-image: url('photos/hf_20260514_223605_6401dd1b-ca1c-4058-8276-006adf62db41.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .l-slab[data-idx="0"] .slab-top::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(148deg, rgba(255,255,255,0.04) 0%, transparent 42%, rgba(0,0,0,0.18) 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .l-slab[data-idx="0"] .slab-front {
+      background: repeating-linear-gradient(0deg, transparent 0 36px, rgba(48,38,28,0.88) 36px 38px, transparent 38px 100%),
+                  linear-gradient(90deg, #4A4846 0%, #525050 50%, #4C4A48 100%);
+    }
+    .l-slab[data-idx="0"] .slab-right { background: linear-gradient(90deg, #424040 0%, #4A4846 100%); }
+
+    .l-slab[data-idx="1"] { --t: 48px; }
+    .l-slab[data-idx="1"] .slab-top {
+      background-color: #0a0a0a;
+      background-image: url('photos/hf_20260514_224052_ccb36984-7f79-40ae-9c9f-44f4028b9dad.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .l-slab[data-idx="1"] .slab-top::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(255,228,135,0.06) 0%, transparent 52%, rgba(150,65,0,0.08) 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .l-slab[data-idx="1"] .slab-front { background: linear-gradient(90deg, #A84E0C 0%, #BF6210 50%, #A84E0C 100%); }
+    .l-slab[data-idx="1"] .slab-right { background: #8E3E06; }
+
+    .l-slab[data-idx="2"] { --t: 4px; }
+    .l-slab[data-idx="2"] .slab-top {
+      background-color: #0a0a0a;
+      background-image: url('photos/hf_20260514_223658_fd8f9362-a4d5-44c1-9996-d48b453aba05.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .l-slab[data-idx="2"] .slab-top::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(132deg, rgba(198,232,255,0.08) 0%, transparent 50%);
+      pointer-events: none; z-index: 1;
+    }
+    .l-slab[data-idx="2"] .slab-front { background: rgba(128,196,238,0.72); }
+    .l-slab[data-idx="2"] .slab-right { background: rgba(108,175,222,0.62); }
+
+    .l-slab[data-idx="3"] { --t: 44px; }
+    .l-slab[data-idx="3"] .slab-top {
+      background-color: #0a0a0a;
+      background-image: url('photos/hf_20260514_223709_e2eb315c-deff-40a6-8b56-ba45968d1a5c.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .l-slab[data-idx="3"] .slab-top::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(148deg, rgba(255,255,255,0.06) 0%, transparent 44%, rgba(0,0,0,0.04) 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .l-slab[data-idx="3"] { outline: 1px solid rgba(204,0,0,0.45); filter: drop-shadow(0 0 20px rgba(204,0,0,0.2)); }
+    .l-slab[data-idx="3"].visible { filter: drop-shadow(0 0 40px rgba(204,0,0,0.35)) drop-shadow(0 0 80px rgba(204,0,0,0.12)); }
+    .l-slab[data-idx="3"] .slab-front { background: linear-gradient(90deg, #6E6A66 0%, #868280 100%); }
+    .l-slab[data-idx="3"] .slab-right { background: #5A5652; }
+
+    .l-slab[data-idx="4"] { --t: 18px; }
+    .l-slab[data-idx="4"] .slab-top {
+      background-color: #0a0a0a;
+      background-image: url('photos/hf_20260514_223718_499f4dfb-27f6-4730-96fb-9b469f922041.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .l-slab[data-idx="4"] .slab-top::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(255,228,170,0.06) 0%, transparent 50%, rgba(80,38,8,0.08) 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .l-slab[data-idx="4"] .slab-front {
+      background: repeating-linear-gradient(0deg, transparent 0 15px, rgba(90,45,8,0.28) 15px 16px),
+                  linear-gradient(90deg, #6A3A14 0%, #7C481C 40%, #6C3C14 100%);
+    }
+    .l-slab[data-idx="4"] .slab-right { background: #5C3010; }
+
+    /* ─── LAYER INFO PANEL ───────────────────────────────── */
+    .info-panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px 60px 40px;
+      border-left: 1px solid var(--border);
+    }
+
+    .info-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 20px;
+    }
+
+    .info-num-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 16px 0 18px;
+    }
+    .info-num {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 4.5vw, 60px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: rgba(255,255,255,0.08);
+      transition: color 0.45s ease;
+      flex-shrink: 0;
+    }
+    .info-num.active { color: var(--red); }
+    .info-num-divider {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+    }
+    .info-num-total {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      flex-shrink: 0;
+    }
+
+    .info-name {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.8vw, 36px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      transition: all 0.4s ease;
+    }
+
+    .info-desc {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 380px;
+      transition: all 0.4s ease;
+    }
+
+    .info-specs {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      transition: opacity 0.4s ease;
+    }
+
+    .spec-item {
+      border-left: 2px solid var(--border);
+      padding-left: 12px;
+    }
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      display: block;
+    }
+    .spec-val {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .info-main-badge {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 12px 16px;
+      background: var(--red-glow);
+      border: 1px solid rgba(204,0,0,0.25);
+    }
+    .info-main-badge.show { display: flex; }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .badge-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .layer-dots {
+      position: absolute;
+      bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 8px;
+      z-index: 5;
+    }
+    .l-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .l-dot.done { background: var(--ink2); }
+    .l-dot.current { background: var(--red); transform: scale(1.5); }
+
+    .scene-label {
+      position: absolute;
+      top: calc(var(--nav-h) + 20px);
+      left: 40px; z-index: 5;
+    }
+    .scene-label span {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    .phase-label {
+      position: absolute;
+      bottom: 36px; right: 56px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      text-transform: uppercase;
+      text-align: right;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .phase-label.show { opacity: 1; }
+
+    /* ─── SERVICES ───────────────────────────────────────── */
+    .services-section {
+      background: var(--bg2);
+      padding: 120px 60px;
+      position: relative;
+    }
+    .services-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 64px;
+      align-items: end;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.7;
+      max-width: 420px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .svc-card {
+      background: var(--surface);
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .svc-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--card-accent, var(--border));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .svc-card:hover { background: var(--surface2); }
+    .svc-card:hover::before { transform: scaleX(1); }
+
+    .svc-card[data-accent="1"] { --card-accent: #CC0000; }
+    .svc-card[data-accent="2"] { --card-accent: #5B8A9A; }
+    .svc-card[data-accent="3"] { --card-accent: #D4A340; }
+    .svc-card[data-accent="4"] { --card-accent: #7A8A9A; }
+
+    .svc-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+      margin-bottom: 28px;
+    }
+
+    .svc-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 24px;
+      opacity: 0.7;
+    }
+
+    .svc-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .svc-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.65;
+    }
+
+    .svc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 28px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .svc-link:hover { color: var(--ink); border-color: var(--ink2); }
+
+    /* ─── STATS BAR ──────────────────────────────────────── */
+    .stats-bar {
+      background: var(--red);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0;
+    }
+    .stat-item {
+      padding: 40px 36px;
+      border-right: 1px solid rgba(255,255,255,0.12);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 6px;
+    }
+
+    /* ─── WHY US ─────────────────────────────────────────── */
+    .whyus-section {
+      padding: 120px 60px;
+      background: var(--bg);
+      position: relative;
+    }
+    .whyus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .whyus-img {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+    }
+    .whyus-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      transition: filter 0.5s;
+    }
+    .whyus-img:hover img { filter: grayscale(0%); }
+    .whyus-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,7,10,0.6) 0%, transparent 60%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .whyus-img-accent {
+      position: absolute;
+      bottom: -12px;
+      right: -12px;
+      width: 80%;
+      height: 80%;
+      border: 1px solid rgba(204,0,0,0.3);
+      z-index: -1;
+    }
+    .whyus-content { }
+    .whyus-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .whyus-title em {
+      color: var(--red);
+      font-style: normal;
+    }
+    .whyus-lead {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .feature-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .feature-icon {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(204,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .feature-icon svg { width: 14px; height: 14px; color: var(--red); }
+    .feature-name {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      display: block;
+    }
+    .feature-note {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.6;
+      margin-top: 3px;
+    }
+
+    /* ─── PROCESS ────────────────────────────────────────── */
+    .process-section {
+      padding: 120px 60px;
+      background: var(--bg2);
+      position: relative;
+    }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 64px;
+      position: relative;
+    }
+    /* Scroll-linked horizontal line (desktop) */
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      right: 40px;
+      height: 1px;
+      background: linear-gradient(90deg,
+        var(--red) 0%,
+        rgba(204,0,0,0.4) 60%,
+        var(--border) 100%);
+      transform: scaleX(var(--line-progress, 0));
+      transform-origin: left center;
+    }
+    /* Vertical line for mobile */
+    .process-v-line {
+      display: none;
+      position: absolute;
+      left: 12px;
+      top: 0;
+      width: 2px;
+      bottom: 0;
+      background: linear-gradient(to bottom,
+        var(--red) 0%,
+        rgba(204,0,0,0.35) 60%,
+        var(--border) 100%);
+      transform: scaleY(0);
+      transform-origin: top center;
+      z-index: 0;
+    }
+    .process-step {
+      padding: 0 20px;
+      position: relative;
+    }
+    .step-dot {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      background: var(--bg2);
+      position: relative;
+      z-index: 1;
+      transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .step-dot-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      transition: color 0.4s ease;
+    }
+    /* Dot lights up as line reaches it */
+    .process-step.step-lit .step-dot {
+      border-color: rgba(204,0,0,0.7);
+      background: var(--red-glow);
+      box-shadow: 0 0 16px rgba(204,0,0,0.18);
+    }
+    .process-step.step-lit .step-dot-num { color: var(--red); }
+    .process-step:hover .step-dot {
+      border-color: var(--red);
+      background: var(--red-glow);
+    }
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .step-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+
+    /* ─── FEATURE CHECKMARK ANIMATION ───────────────────── */
+    .feature-icon {
+      transform: scale(0.6) rotate(-15deg);
+      opacity: 0;
+      transition:
+        transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s,
+        opacity   0.35s ease 0.2s;
+    }
+    .feature-item.in .feature-icon {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    /* SVG checkmark stroke-draw */
+    .feature-icon svg path {
+      stroke-dasharray: 22;
+      stroke-dashoffset: 22;
+      transition: stroke-dashoffset 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.45s;
+    }
+    .feature-item.in .feature-icon svg path {
+      stroke-dashoffset: 0;
+    }
+    /* Stagger per item */
+    .feature-item:nth-child(2) .feature-icon { transition-delay: 0.25s, 0.25s; }
+    .feature-item:nth-child(2) .feature-icon svg path { transition-delay: 0.52s; }
+    .feature-item:nth-child(3) .feature-icon { transition-delay: 0.3s,  0.3s; }
+    .feature-item:nth-child(3) .feature-icon svg path { transition-delay: 0.6s; }
+    .feature-item:nth-child(4) .feature-icon { transition-delay: 0.35s, 0.35s; }
+    .feature-item:nth-child(4) .feature-icon svg path { transition-delay: 0.68s; }
+
+    /* ─── GALLERY ────────────────────────────────────────── */
+    .gallery-section {
+      padding: 0;
+      background: var(--bg);
+    }
+    .gallery-header {
+      padding: 80px 60px 48px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 220px);
+      gap: 3px;
+    }
+    .g-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      cursor: pointer;
+    }
+    .g-item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    .g-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(35%) brightness(0.82);
+      transition: filter 0.55s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
+    }
+    .g-item:hover img {
+      filter: grayscale(0%) brightness(1.02);
+      transform: scale(1.05);
+    }
+    .g-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,7,10,0.72) 0%, rgba(8,7,10,0.1) 55%, transparent 100%);
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .g-item:hover::after { opacity: 0.7; }
+    .g-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 18px 22px 20px;
+      z-index: 2;
+      transform: translateY(6px);
+      opacity: 0;
+      transition: opacity 0.35s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1);
+      pointer-events: none;
+    }
+    .g-item:hover .g-label { opacity: 1; transform: translateY(0); }
+    .g-label-type {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .g-label-title {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    /* ─── TESTIMONIALS ───────────────────────────────────── */
+    .testimonials-section {
+      padding: 80px 60px;
+      background: var(--bg2);
+    }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+    }
+    .testi-card {
+      background: var(--surface);
+      padding: 36px 32px;
+      position: relative;
+    }
+    .testi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--red);
+    }
+    .testi-stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+    .star { color: var(--red); font-size: 13px; }
+    .testi-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testi-author {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .testi-role {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-top: 4px;
+    }
+
+    /* ─── CONTACT ────────────────────────────────────────── */
+    .contact-section {
+      padding: 120px 60px;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(204,0,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .contact-title em { color: var(--red); font-style: normal; }
+    .contact-info {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .contact-info-icon {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-info-icon svg { width: 14px; height: 14px; color: var(--red); }
+    .contact-info-text {
+      font-size: 14px;
+      color: var(--ink2);
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--dim); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: rgba(204,0,0,0.5); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-submit {
+      background: var(--red);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      transition: background 0.2s;
+      margin-top: 8px;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--red-h); }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    .footer-brand-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink2);
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--ink2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── SCROLL REVEAL ──────────────────────────────────── */
+    .rv {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .rv.in { opacity: 1; transform: none; }
+    .rv[data-d="1"] { transition-delay: 0.1s; }
+    .rv[data-d="2"] { transition-delay: 0.2s; }
+    .rv[data-d="3"] { transition-delay: 0.3s; }
+    .rv[data-d="4"] { transition-delay: 0.4s; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .process-steps { grid-template-columns: repeat(3, 1fr); }
+      .process-step:nth-child(4),
+      .process-step:nth-child(5) { margin-top: 32px; }
+    }
+
+    @media (max-width: 900px) {
+      .layer-sticky { grid-template-columns: 1fr; grid-template-rows: 52vh 48vh; }
+      .scene-wrap { height: 52vh; }
+      .info-panel { border-left: none; border-top: 1px solid var(--border); padding: 24px 28px 20px; justify-content: flex-start; }
+      .info-num { font-size: 36px; }
+      .info-name { font-size: 19px; }
+      .info-desc { font-size: 13px; margin-top: 10px; }
+      .info-specs { margin-top: 16px; }
+      .info-main-badge { margin-top: 16px; }
+      .whyus-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .g-item:first-child { grid-column: span 2; grid-row: span 1; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .burger { display: flex; }
+      #nav { padding: 0 20px; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: calc(var(--nav-h) + 28px) 24px 48px;
+        gap: 32px;
+      }
+      .hero-right { flex-direction: row; flex-wrap: wrap; gap: 24px 32px; margin-top: 0; }
+      .hero-stat-num { font-size: clamp(24px, 7vw, 36px); }
+      .hero-scroll { display: none; }
+
+      .services-section,
+      .whyus-section,
+      .process-section,
+      .contact-section { padding: 72px 24px; }
+      .testimonials-section { padding: 56px 24px; }
+      .gallery-header { padding: 56px 24px 28px; }
+      footer { padding: 44px 24px; }
+
+      .services-grid { grid-template-columns: 1fr; gap: 2px; }
+      .section-head { grid-template-columns: 1fr; gap: 16px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { padding: 28px 24px; }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-num { font-size: clamp(32px, 9vw, 48px); }
+
+      /* Process: left-side timeline */
+      .process-steps {
+        grid-template-columns: 1fr;
+        margin-top: 40px;
+        gap: 0;
+        padding-left: 28px;
+      }
+      .process-steps::before { display: none; }
+      .process-v-line { display: block; left: 12px; }
+      .process-step {
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 0 20px;
+        align-items: start;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .process-step:last-child { border-bottom: none; }
+      .step-dot {
+        width: 44px; height: 44px;
+        margin-bottom: 0;
+        grid-row: span 2;
+      }
+
+      /* Horizontal connector tick: line → dot */
+      .step-dot::before {
+        content: '';
+        position: absolute;
+        left: -16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 16px;
+        height: 1px;
+        background: var(--border);
+        transition: background 0.4s ease, box-shadow 0.35s ease;
+      }
+      .process-step.step-lit .step-dot::before {
+        background: var(--red);
+        box-shadow: 0 0 10px rgba(204,0,0,0.4);
+      }
+
+      /* Disable general rv/in for process steps — scroll-linked instead */
+      .process-step.rv, .process-step.rv.in {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      /* Content slides in when step activates */
+      .step-title {
+        font-size: 15px;
+        padding-top: 4px;
+        opacity: 0;
+        transform: translateX(12px);
+        transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .step-desc {
+        font-size: 13px;
+        margin-top: 4px;
+        opacity: 0;
+        transform: translateX(12px);
+        transition: opacity 0.4s ease 0.12s, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+      }
+      .process-step.step-lit .step-title,
+      .process-step.step-lit .step-desc {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .g-item:first-child { grid-column: span 1; grid-row: span 1; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      /* Hero */
+      .hero-title { font-size: clamp(36px, 11.5vw, 52px); line-height: 1.0; }
+      .hero-sub { font-size: 14px; line-height: 1.65; }
+      .hero-eyebrow { font-size: 9px; }
+      .hero-actions { flex-direction: column; gap: 10px; }
+      .btn-primary, .btn-ghost {
+        display: block;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .hero-right { display: none; }
+
+      /* Stats bar */
+      .stat-item { padding: 20px 16px; }
+      .stat-num { font-size: clamp(28px, 8.5vw, 40px); }
+      .stat-label { font-size: 9px; }
+
+      /* Layer section mobile */
+      .layer-sticky { grid-template-rows: 50vh 50vh; }
+      .scene-wrap { height: 50vh; }
+      .info-panel { padding: 16px 20px 14px; }
+      .info-num-row { margin: 10px 0 12px; }
+      .info-num { font-size: 28px; }
+      .info-name { font-size: 16px; }
+      .info-desc { font-size: 12px; margin-top: 6px; line-height: 1.5; }
+      .info-specs { margin-top: 12px; gap: 10px; }
+      .spec-label { font-size: 8px; }
+      .spec-val { font-size: 11px; }
+      .info-main-badge { margin-top: 10px; padding: 8px 12px; }
+      .badge-text { font-size: 9px; }
+      .phase-label { font-size: 8px; }
+
+      /* Service cards */
+      .svc-card { padding: 24px 20px; }
+      .svc-num { margin-bottom: 14px; }
+      .svc-icon { width: 32px; height: 32px; margin-bottom: 14px; }
+      .svc-title { font-size: 16px; }
+      .svc-desc { font-size: 13px; }
+
+      /* Sections spacing */
+      .services-section,
+      .whyus-section,
+      .process-section,
+      .contact-section { padding: 56px 20px; }
+      .testimonials-section { padding: 44px 20px; }
+      .gallery-header { padding: 44px 20px 24px; }
+      footer { padding: 36px 20px; }
+
+      /* Why Us */
+      .whyus-section { padding: 56px 20px; }
+      .whyus-img { aspect-ratio: 4/3; }
+      .whyus-title { font-size: clamp(22px, 7.5vw, 34px); }
+      .whyus-lead { font-size: 14px; }
+      .feature-note { font-size: 12px; }
+
+      /* Process */
+      .process-step { padding: 16px 0; }
+      .step-dot { width: 38px; height: 38px; }
+      .step-title { font-size: 14px; }
+
+      /* Gallery */
+      .gallery-title { font-size: clamp(26px, 8.5vw, 40px); }
+
+      /* Testimonials */
+      .testi-card { padding: 22px 18px; }
+      .testi-text { font-size: 14px; }
+      .testi-name { font-size: 14px; }
+
+      /* Contact */
+      .contact-title { font-size: clamp(30px, 10vw, 48px); }
+      .contact-lead { font-size: 14px; }
+      .form-input, .form-textarea, .form-select { font-size: 14px; }
+      .btn-submit { font-size: 13px; padding: 16px 28px; }
+
+      /* Footer */
+      .footer-desc { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg width="192" height="36" viewBox="0 0 326 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#F0EBE3" letter-spacing="-2">Beton</text>
+      <path d="M174 2 H322 V62 H174" fill="none" stroke="#F0EBE3" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+      <text x="185" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#CC0000" letter-spacing="-2">Tech</text>
+    </svg>
+  </a>
+
+  <div class="nav-links">
+    <a href="#usluge">Usluge</a>
+    <a href="#o-nama">O nama</a>
+    <a href="#radovi">Radovi</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+
+  <a href="#kontakt" class="nav-cta">Zatražite ponudu</a>
+
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════ MOBILE MENU ══════════ -->
+<div class="mob-overlay" id="mob-overlay">
+  <a href="#usluge" class="mob-link">Usluge</a>
+  <a href="#o-nama" class="mob-link">O nama</a>
+  <a href="#radovi" class="mob-link">Radovi</a>
+  <a href="#kontakt" class="mob-link">Kontakt</a>
+  <a href="#kontakt" class="mob-cta">Zatražite ponudu</a>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Hrvatska &nbsp;·&nbsp; Kalinovac &nbsp;·&nbsp; Betonski podovi</p>
+      <h1 class="hero-title">
+        Majstori<br>
+        betonskih<br>
+        <span class="red">podova</span>
+      </h1>
+      <p class="hero-sub">Profesionalna ugradnja cementnih estriha, samonivelacijskih masa i industrijskih podova. Svaki projekt — precizno, pouzdano, na rok.</p>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">Zatražite besplatnu procjenu →</a>
+        <a href="#layer-section" class="btn-ghost">Pogledajte radove</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-stat">
+        <div class="hero-stat-num">15<em>+</em></div>
+        <div class="hero-stat-label">Godina iskustva</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">500<em>+</em></div>
+        <div class="hero-stat-label">Projekata</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">200<em>K+</em></div>
+        <div class="hero-stat-label">m² podova</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════ 3D LAYER SECTION ══════════ -->
+<div class="layer-wrapper" id="layer-section">
+  <div class="layer-sticky">
+
+    <div class="scene-wrap">
+      <div class="scene-label"><span>Anatomija poda / Floor anatomy</span></div>
+
+      <div class="scene" id="scene">
+        <div class="stage" id="stage">
+
+          <div class="l-slab" data-idx="0">
+            <div class="slab-top">
+              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/01-ab-ploca-poster.jpg">
+                <source src="/public/videos/floor-anatomy/01-ab-ploca.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="slab-front"></div>
+            <div class="slab-right"></div>
+          </div>
+
+          <div class="l-slab" data-idx="1">
+            <div class="slab-top">
+              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/02-izolacija-poster.jpg">
+                <source src="/public/videos/floor-anatomy/02-izolacija.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="slab-front"></div>
+            <div class="slab-right"></div>
+          </div>
+
+          <div class="l-slab" data-idx="2">
+            <div class="slab-top">
+              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/03-pe-folija-poster.jpg">
+                <source src="/public/videos/floor-anatomy/03-pe-folija.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="slab-front"></div>
+            <div class="slab-right"></div>
+          </div>
+
+          <div class="l-slab" data-idx="3">
+            <div class="slab-top">
+              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/04-estrih-poster.jpg">
+                <source src="/public/videos/floor-anatomy/04-estrih.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="slab-front"></div>
+            <div class="slab-right"></div>
+          </div>
+
+          <div class="l-slab" data-idx="4">
+            <div class="slab-top">
+              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/05-podna-obloga-poster.jpg">
+                <source src="/public/videos/floor-anatomy/05-podna-obloga.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="slab-front"></div>
+            <div class="slab-right"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="layer-dots" id="layer-dots">
+        <div class="l-dot" data-idx="0"></div>
+        <div class="l-dot" data-idx="1"></div>
+        <div class="l-dot" data-idx="2"></div>
+        <div class="l-dot" data-idx="3"></div>
+        <div class="l-dot" data-idx="4"></div>
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <div class="info-tag">Sloj poda / Floor layer</div>
+      <div class="info-num-row">
+        <span class="info-num" id="info-num">—</span>
+        <div class="info-num-divider"></div>
+        <span class="info-num-total">/ 05</span>
+      </div>
+      <h2 class="info-name" id="info-name">Scrollajte prema dolje</h2>
+      <p class="info-desc" id="info-desc">
+        Svaki profesionalni pod gradi se sloj po sloj.<br>
+        Otkrijte anatomiju savršenog betonskog poda.
+      </p>
+      <div class="info-specs" id="info-specs" style="opacity:0; transition: opacity 0.4s ease">
+        <div class="spec-item">
+          <span class="spec-label">Debljina</span>
+          <span class="spec-val" id="spec-thick">—</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Materijal</span>
+          <span class="spec-val" id="spec-mat">—</span>
+        </div>
+      </div>
+      <div class="info-main-badge" id="info-badge">
+        <div class="badge-dot"></div>
+        <span class="badge-text">BetonTech specijalizacija</span>
+      </div>
+      <div class="phase-label" id="phase-label">Eksplodirani pogled / Exploded view</div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- ══════════ SERVICES ══════════ -->
+<section class="services-section" id="usluge">
+  <div class="section-head rv">
+    <div>
+      <span class="section-tag">Naše usluge</span>
+      <h2 class="section-title">Što nudimo</h2>
+    </div>
+    <p class="section-sub">Od klasičnog estriha do industrijskih epoksidnih premaza — pokrivamo sve vrste podnih obloga za stambene, poslovne i industrijske objekte.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="svc-card rv" data-accent="1">
+      <div class="svc-num">01</div>
+      <svg class="svc-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="28" width="32" height="8" fill="rgba(204,0,0,0.15)" stroke="#CC0000" stroke-width="1"/>
+        <rect x="4" y="20" width="32" height="6" fill="rgba(204,0,0,0.08)" stroke="rgba(204,0,0,0.4)" stroke-width="1"/>
+        <rect x="4" y="12" width="32" height="6" fill="rgba(80,80,80,0.2)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      </svg>
+      <div class="svc-title">Cementni estrih</div>
+      <p class="svc-desc">Klasični mokri estrih za stambene i poslovne prostore. Savršena podloga za pločice, parket i laminat.</p>
+      <a href="#kontakt" class="svc-link">Saznajte više →</a>
+    </div>
+
+    <div class="svc-card rv" data-accent="2" data-d="1">
+      <div class="svc-num">02</div>
+      <svg class="svc-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 30 Q10 20 20 24 Q30 28 36 18" stroke="#5B8A9A" stroke-width="1.5" fill="none"/>
+        <rect x="4" y="30" width="32" height="6" fill="rgba(91,138,154,0.15)" stroke="#5B8A9A" stroke-width="1"/>
+      </svg>
+      <div class="svc-title">Samonivelacijska masa</div>
+      <p class="svc-desc">Tekuća masa koja se sama izravnava na milimetarsku točnost. Idealna za renovacije i tanke nanosne slojeve.</p>
+      <a href="#kontakt" class="svc-link">Saznajte više →</a>
+    </div>
+
+    <div class="svc-card rv" data-accent="3" data-d="2">
+      <div class="svc-num">03</div>
+      <svg class="svc-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="6" width="32" height="28" fill="rgba(212,163,64,0.1)" stroke="#D4A340" stroke-width="1"/>
+        <line x1="4" y1="14" x2="36" y2="14" stroke="rgba(212,163,64,0.4)" stroke-width="1"/>
+        <line x1="4" y1="22" x2="36" y2="22" stroke="rgba(212,163,64,0.4)" stroke-width="1"/>
+        <line x1="14" y1="6" x2="14" y2="34" stroke="rgba(212,163,64,0.4)" stroke-width="1"/>
+        <line x1="26" y1="6" x2="26" y2="34" stroke="rgba(212,163,64,0.4)" stroke-width="1"/>
+      </svg>
+      <div class="svc-title">Industrijski podovi</div>
+      <p class="svc-desc">Armirana betonska podna ploča i estrih za skladišta, tvornice i garaže s visokim prometnim opterećenjem.</p>
+      <a href="#kontakt" class="svc-link">Saznajte više →</a>
+    </div>
+
+    <div class="svc-card rv" data-accent="4" data-d="3">
+      <div class="svc-num">04</div>
+      <svg class="svc-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="14" fill="rgba(122,138,154,0.1)" stroke="#7A8A9A" stroke-width="1"/>
+        <circle cx="20" cy="20" r="8" fill="rgba(122,138,154,0.15)" stroke="#7A8A9A" stroke-width="1"/>
+        <circle cx="20" cy="20" r="2" fill="#7A8A9A"/>
+      </svg>
+      <div class="svc-title">Epoksidni premazi</div>
+      <p class="svc-desc">Dekorativni i zaštitni epoksidni premazi za industrijske podove, garaže i čiste prostore. Otporni na kemikalije.</p>
+      <a href="#kontakt" class="svc-link">Saznajte više →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ STATS ══════════ -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num" data-target="15" data-suffix="+">15+</div>
+    <div class="stat-label">Godina iskustva</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="500" data-suffix="+">500+</div>
+    <div class="stat-label">Zadovoljnih projekata</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="200" data-suffix="K+">200K+</div>
+    <div class="stat-label">m² postavljenih podova</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="98" data-suffix="%">98%</div>
+    <div class="stat-label">Stopa preporuke</div>
+  </div>
+</div>
+
+<!-- ══════════ WHY US ══════════ -->
+<section class="whyus-section" id="o-nama">
+  <div class="whyus-grid">
+    <div class="whyus-img rv">
+      <img src="photos/estrih-sunlit.avif" alt="BetonTech — završna obrada estriha">
+      <div class="whyus-img-accent"></div>
+    </div>
+    <div class="whyus-content">
+      <span class="section-tag">Zašto BetonTech</span>
+      <h2 class="whyus-title rv">Vaš pouzdani<br><em>partner u gradnji</em></h2>
+      <p class="whyus-lead rv" data-d="1">
+        Dobrodošli kod BetonTecha, vašeg pouzdanog partnera za građevinske projekte. Naš fokus na kvalitetu i zadovoljstvo kupaca postavlja nas u središte vaših građevinskih potreba. Naša predana ekipa koristi opremu i materijale u koraku s najmodernijom tehnologijom kako bi osigurala vrhunske rezultate.
+      </p>
+      <div class="feature-list">
+        <div class="feature-item rv" data-d="1">
+          <div class="feature-icon">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <span class="feature-name">Specijalizirani za glazure i industrijske podove</span>
+            <span class="feature-note">Specijalizirali smo se za izradu strojnih glazura i industrijskih podova s naglaskom na kvalitetu.</span>
+          </div>
+        </div>
+        <div class="feature-item rv" data-d="2">
+          <div class="feature-icon">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <span class="feature-name">Moderna oprema i materijali</span>
+            <span class="feature-note">Koristimo opremu i materijale u koraku s najmodernijom tehnologijom za vrhunske rezultate.</span>
+          </div>
+        </div>
+        <div class="feature-item rv" data-d="3">
+          <div class="feature-icon">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <span class="feature-name">Individualizirani pristup</span>
+            <span class="feature-note">Svaki klijent dobiva individualizirani pristup — jer svaki projekt je jedinstven.</span>
+          </div>
+        </div>
+        <div class="feature-item rv" data-d="4">
+          <div class="feature-icon">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <span class="feature-name">Kvaliteta i zadovoljstvo klijenata</span>
+            <span class="feature-note">Fokus na kvalitetu i zadovoljstvo kupaca postavlja nas u središte vaših građevinskih potreba.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROCESS ══════════ -->
+<section class="process-section">
+  <div class="section-head rv">
+    <div>
+      <span class="section-tag">Kako radimo</span>
+      <h2 class="section-title">Proces suradnje</h2>
+    </div>
+    <p class="section-sub">Od prvog kontakta do predaje poda — pet koraka jasnog i pouzdanog procesa.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-v-line"></div>
+    <div class="process-step rv">
+      <div class="step-dot"><span class="step-dot-num">01</span></div>
+      <div class="step-title">Upit</div>
+      <p class="step-desc">Kontaktirate nas pozivom, mailom ili formom. Odgovaramo unutar 24h.</p>
+    </div>
+    <div class="process-step rv" data-d="1">
+      <div class="step-dot"><span class="step-dot-num">02</span></div>
+      <div class="step-title">Izmjera</div>
+      <p class="step-desc">Dolazimo na lokaciju, izmjerimo prostor i procjenimo stanje podloge.</p>
+    </div>
+    <div class="process-step rv" data-d="2">
+      <div class="step-dot"><span class="step-dot-num">03</span></div>
+      <div class="step-title">Ponuda</div>
+      <p class="step-desc">U roku 48h dobivate detaljnu ponudu s rokom izvedbe i garancijom.</p>
+    </div>
+    <div class="process-step rv" data-d="3">
+      <div class="step-dot"><span class="step-dot-num">04</span></div>
+      <div class="step-title">Izvedba</div>
+      <p class="step-desc">Profesionalna ugradnja po dogovorenom rasporedu. Dnevni izvještaji po zahtjevu.</p>
+    </div>
+    <div class="process-step rv" data-d="4">
+      <div class="step-dot"><span class="step-dot-num">05</span></div>
+      <div class="step-title">Predaja</div>
+      <p class="step-desc">Kontrolna inspekcija ravnosti, primopredajni zapisnik i pisano jamstvo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ GALLERY ══════════ -->
+<section class="gallery-section" id="radovi">
+  <div class="gallery-header rv">
+    <span class="section-tag">Naši radovi</span>
+    <h2 class="section-title">Rezultati govore</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item">
+      <img src="photos/trowel-indoor.png" alt="Industrijski pod — strojni estrih">
+      <div class="g-label">
+        <span class="g-label-type">Industrijski objekt</span>
+        <span class="g-label-title">Strojni estrih — velika površina</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/pool-tiles.png" alt="Bazen — mozaik obloga s betonskim rubom">
+      <div class="g-label">
+        <span class="g-label-type">Specijalna izvedba</span>
+        <span class="g-label-title">Bazen — mozaik s betonskim rubom</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/estrih-skylight.png" alt="Stambeni estrih — završna obrada">
+      <div class="g-label">
+        <span class="g-label-type">Stambeni prostor</span>
+        <span class="g-label-title">CT-C25/F5 — premium završetak</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/estrih-commercial.avif" alt="Poslovni prostor — estrih s podnim instalacijama">
+      <div class="g-label">
+        <span class="g-label-type">Poslovni prostor</span>
+        <span class="g-label-title">Estrih s podnim instalacijama</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/concrete-pour.avif" alt="AB ploča — svježi betonski pod">
+      <div class="g-label">
+        <span class="g-label-type">Nova izgradnja</span>
+        <span class="g-label-title">Armiranobetonska ploča — izlijevanje</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/pool-wide.avif" alt="Bazen — betonska obloga oko bazena">
+      <div class="g-label">
+        <span class="g-label-type">Vanjska izvedba</span>
+        <span class="g-label-title">Betonska obloga — okoliš bazena</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/estrih-garage.avif" alt="Garaža — industrijski estrih">
+      <div class="g-label">
+        <span class="g-label-type">Garaža / pomoćni prostor</span>
+        <span class="g-label-title">Industrijska izvedba estriha</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/helikopter.jpg" alt="Strojni estrih — helikopter na vanjskom objektu">
+      <div class="g-label">
+        <span class="g-label-type">Vanjski objekt</span>
+        <span class="g-label-title">Helikopter glazura — industrijski pod</span>
+      </div>
+    </div>
+    <div class="g-item">
+      <img src="photos/estrih2.jpg" alt="Estrih — završna obrada prostora">
+      <div class="g-label">
+        <span class="g-label-type">Stambeni prostor</span>
+        <span class="g-label-title">Cementni estrih — završna obrada</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TESTIMONIALS ══════════ -->
+<section class="testimonials-section">
+  <div class="section-head rv">
+    <div>
+      <span class="section-tag">Recenzije</span>
+      <h2 class="section-title">Što kažu klijenti</h2>
+    </div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card rv">
+      <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      <p class="testi-text">"Izvrsna usluga i kvalitetni industrijski podovi. Preporučujem svima koji trebaju industrijski pod!"</p>
+      <div class="testi-author">Luka B.</div>
+      <div class="testi-role">Klijent</div>
+    </div>
+    <div class="testi-card rv" data-d="1">
+      <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      <p class="testi-text">"Radili smo s BetonTechom na industrijskom kompleksu. Preciznost i profesionalnost na visokoj razini. Preporučujem svim izvođačima."</p>
+      <div class="testi-author">Mario K.</div>
+      <div class="testi-role">Voditelj projekta</div>
+    </div>
+    <div class="testi-card rv" data-d="2">
+      <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      <p class="testi-text">"Ekipa BetonTecha je vrhunski profesionalna. Estrih je postavljen brzo i precizno, a komunikacija je bila odlična kroz cijeli projekt."</p>
+      <div class="testi-author">Stjepan H.</div>
+      <div class="testi-role">Privatni investitor</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section class="contact-section" id="kontakt">
+  <div class="contact-grid">
+    <div>
+      <span class="section-tag">Kontaktirajte nas</span>
+      <h2 class="contact-title rv">Zatražite<br><em>besplatnu</em><br>procjenu</h2>
+      <div class="contact-info rv" data-d="1">
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M7 1C4.24 1 2 3.24 2 6c0 3.5 5 8 5 8s5-4.5 5-8c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 117 4a1.5 1.5 0 010 3.5z" fill="currentColor"/></svg>
+          </div>
+          <span class="contact-info-text">Dravska 71, Kalinovac</span>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M2 2h4l1.5 3-2 1.5a8 8 0 003 3L10 7.5l3 1.5v4a1 1 0 01-1 1C6 14 0 8 0 3a1 1 0 011-1h1z" fill="currentColor"/></svg>
+          </div>
+          <span class="contact-info-text">091 736 8079</span>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M1 3h12v9H1z" stroke="currentColor" stroke-width="1" fill="none"/><path d="M1 3l6 5 6-5" stroke="currentColor" stroke-width="1"/></svg>
+          </div>
+          <span class="contact-info-text">info@betontech.hr</span>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form rv" data-d="1" onsubmit="return false">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ime i prezime</label>
+          <input type="text" placeholder="Ivan Horvat">
+        </div>
+        <div class="form-group">
+          <label>Telefon</label>
+          <input type="tel" placeholder="091 736 8079">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="email@domena.hr">
+      </div>
+      <div class="form-group">
+        <label>Vrsta radova</label>
+        <select>
+          <option value="">— Odaberite —</option>
+          <option>Cementni estrih</option>
+          <option>Samonivelacijska masa</option>
+          <option>Industrijski pod</option>
+          <option>Epoksidni premaz</option>
+          <option>Ostalo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Opis projekta</label>
+        <textarea placeholder="Opišite projekt (lokacija, površina, tip prostora...)"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Pošalji upit →</button>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <svg width="158" height="44" viewBox="0 0 326 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#F0EBE3" letter-spacing="-2">Beton</text>
+        <path d="M174 2 H322 V62 H174" fill="none" stroke="#F0EBE3" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+        <text x="185" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#CC0000" letter-spacing="-2">Tech</text>
+        <text x="0" y="80" font-family="'DM Mono',monospace" font-size="10" fill="rgba(240,235,227,0.38)" letter-spacing="5.5">BETONSKI PODOVI</text>
+      </svg>
+      <p class="footer-brand-desc">Majstori cementnih estriha i betonskih podova u cijeloj Hrvatskoj. Kvaliteta koja se mjeri na milimetre.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Usluge</div>
+      <div class="footer-links">
+        <a href="#">Cementni estrih</a>
+        <a href="#">Samonivelacijska masa</a>
+        <a href="#">Industrijski podovi</a>
+        <a href="#">Epoksidni premazi</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Tvrtka</div>
+      <div class="footer-links">
+        <a href="#o-nama">O nama</a>
+        <a href="#radovi">Naši radovi</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Kontakt</div>
+      <div class="footer-links">
+        <a href="tel:+385917368079">091 736 8079</a>
+        <a href="mailto:info@betontech.hr">info@betontech.hr</a>
+        <a href="#">Dravska 71, Kalinovac</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 BetonTech d.o.o. Sva prava pridržana.</div>
+    <div class="footer-copy">Betonski podovi · Estrih · Hrvatska</div>
+  </div>
+</footer>
+
+<!-- ══════════ JAVASCRIPT ══════════ -->
+
+<script>
+// ── Layer data
+const LAYERS = [
+  { name: 'AB ploča',               num: '01', desc: 'Armiranobetonska ploča nosi čitav podovni sustav. Debljina i armatura određuju kapacitet nosivosti — temelj je svega.',                                                         thick: '15 – 25 cm',  mat: 'Armirani beton C25/30',        restZ: 0,   spreadZ: 0,   entry: 0.05 },
+  { name: 'Izolacija',              num: '02', desc: 'XPS ili EPS ploče smanjuju toplinski gubitak i udarnu buku kroz pod. Ključne za sustave podnog grijanja i energetsku učinkovitost.',                                           thick: '5 – 12 cm',   mat: 'XPS / EPS ekspandirana ploča', restZ: 10,  spreadZ: 75,  entry: 0.23 },
+  { name: 'PE folija',              num: '03', desc: 'Razdelna polietilenska folija sprječava vezivanje estriha za izolacijski sloj — omogućuje slobodno toplinsko istezanje bez pucanja.',                                          thick: '0.2 mm',      mat: 'PE folija 0.2 mm',             restZ: 73,  spreadZ: 155, entry: 0.42 },
+  { name: 'Podna glazura (Estrih)', num: '04', desc: 'BetonTech specijalizacija. Visokovrijedni cementni estrih klase CT-C25/F5 — savršena, milimetarski ravna osnova za svaku završnu oblogu.',                                    thick: '4 – 8 cm',    mat: 'CT-C25/F5 cementna masa',      restZ: 76,  spreadZ: 235, entry: 0.60, isMain: true },
+  { name: 'Podna obloga',           num: '05', desc: 'Parket, laminat, vinil ili pločice — svaki završni materijal zahtijeva savršeno izravnan i suhi estrih. Tu počinje ljepota poda.',                                            thick: '8 – 20 mm',   mat: 'Parket / laminat / pločice',   restZ: 132, spreadZ: 315, entry: 0.77 }
+];
+
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const wrapper    = document.getElementById('layer-section');
+const stage      = document.getElementById('stage');
+const slabs      = [...document.querySelectorAll('.l-slab')];
+const dots       = [...document.querySelectorAll('.l-dot')];
+const infoNum    = document.getElementById('info-num');
+const infoName   = document.getElementById('info-name');
+const infoDesc   = document.getElementById('info-desc');
+const infoSpecs  = document.getElementById('info-specs');
+const specThick  = document.getElementById('spec-thick');
+const specMat    = document.getElementById('spec-mat');
+const infoBadge  = document.getElementById('info-badge');
+const phaseLabel = document.getElementById('phase-label');
+
+const SPREAD_START = 0.84;
+const SPREAD_END   = 1.0;
+let lastActiveLayer = -1;
+let inSpread = false;
+
+function getProgress() {
+  const rect = wrapper.getBoundingClientRect();
+  return Math.max(0, Math.min(1, -rect.top / (wrapper.offsetHeight - window.innerHeight)));
+}
+
+function updateInfo(layerIdx, spread) {
+  phaseLabel.classList.toggle('show', spread);
+  if (layerIdx < 0) return;
+  const layer = LAYERS[layerIdx];
+  if (layerIdx !== lastActiveLayer) {
+    lastActiveLayer = layerIdx;
+    infoNum.textContent = layer.num;
+    infoNum.classList.add('active');
+    infoName.textContent = layer.name;
+    infoDesc.textContent = layer.desc;
+    specThick.textContent = layer.thick;
+    specMat.textContent = layer.mat;
+    infoSpecs.style.opacity = '1';
+    infoBadge.classList.toggle('show', !!layer.isMain);
+  }
+}
+
+function tick() {
+  const p = getProgress();
+  const spreadF   = Math.max(0, (p - SPREAD_START) / (SPREAD_END - SPREAD_START));
+  const nowSpread = spreadF > 0.01;
+  const rx = 70 - p * 22;
+  const sf = window.innerWidth < 768 ? 0.62 : 1;
+  stage.style.transform = `scale(${sf}) translateY(${spreadF * 70}px) rotateX(${rx}deg) rotateZ(-22deg)`;
+
+  if (nowSpread !== inSpread) {
+    inSpread = nowSpread;
+    slabs.forEach(s => {
+      s.style.transition = inSpread ? 'none' : 'transform 0.95s cubic-bezier(0.34,1.56,0.64,1), opacity 0.6s ease';
+    });
+  }
+
+  let activeLayer = -1;
+  slabs.forEach((slab, i) => {
+    const layer   = LAYERS[i];
+    const visible = p >= layer.entry;
+    if (visible) activeLayer = i;
+
+    const targetZ = layer.restZ + (layer.spreadZ - layer.restZ) * spreadF;
+    if (!visible) {
+      slab.style.opacity = '0';
+      if (!inSpread) slab.style.transform = `translateZ(-300px)`;
+    } else {
+      slab.style.opacity = '1';
+      slab.style.transform = `translateZ(${targetZ}px)`;
+      if (i === 3) slab.classList.add('visible');
+    }
+
+    // Play/pause the video on this slab's top face
+    const video = slab.querySelector('.slab-video');
+    if (video && !REDUCED_MOTION) {
+      if (visible && video.paused) {
+        video.play().then(() => video.classList.add('playing')).catch(() => {});
+      } else if (!visible && !video.paused) {
+        video.pause();
+      }
+    }
+  });
+
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('done',    p >= LAYERS[i].entry && i < activeLayer);
+    dot.classList.toggle('current', i === activeLayer && !nowSpread);
+  });
+
+  updateInfo(activeLayer, nowSpread);
+}
+
+window.addEventListener('scroll', tick, { passive: true });
+tick();
+
+// ── Nav scroll state
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// ── Burger menu
+const burger  = document.getElementById('burger');
+const overlay = document.getElementById('mob-overlay');
+const mobLinks = overlay.querySelectorAll('a');
+
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  overlay.classList.toggle('open');
+});
+mobLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+});
+
+// ── Counter animation
+const counters = document.querySelectorAll('.stat-num[data-target]');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el     = entry.target;
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let start    = 0;
+    const dur    = 1400;
+    const step   = 16;
+    const inc    = target / (dur / step);
+    el.textContent = '0' + suffix;
+    const timer = setInterval(() => {
+      start = Math.min(start + inc, target);
+      el.textContent = Math.floor(start) + suffix;
+      if (start >= target) clearInterval(timer);
+    }, step);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObserver.observe(el));
+
+// ── Scroll reveal
+const rvObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      rvObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rv').forEach(el => rvObserver.observe(el));
+
+// ── Process line & step-dot scroll animation
+const procSection = document.querySelector('.process-section');
+const procStepsEl = document.querySelector('.process-steps');
+const procSteps   = [...document.querySelectorAll('.process-step')];
+const procVLine   = document.querySelector('.process-v-line');
+
+function updateProcessLine() {
+  if (!procSection || !procStepsEl) return;
+  const rect = procSection.getBoundingClientRect();
+  const vh   = window.innerHeight;
+
+  // Progress 0→1: starts when top of section hits 90% viewport, ends when it hits viewport top
+  const raw  = (vh * 0.9 - rect.top) / (vh * 0.75);
+  const pct  = Math.max(0, Math.min(1, raw));
+
+  if (window.innerWidth > 768) {
+    // Desktop: scroll-linked horizontal line via CSS custom property
+    procStepsEl.style.setProperty('--line-progress', pct.toFixed(4));
+    // Activate dots progressively as line reaches each one
+    const total = procSteps.length;
+    procSteps.forEach((step, i) => {
+      const threshold = i / (total - 1) * 0.85;
+      step.classList.toggle('step-lit', pct >= threshold);
+    });
+  } else {
+    // Mobile: animate vertical line + individual step dots
+    if (procVLine) procVLine.style.transform = `scaleY(${Math.min(1, pct * 1.6).toFixed(4)})`;
+    procSteps.forEach(step => {
+      const sr = step.getBoundingClientRect();
+      if (sr.top < vh * 0.78) step.classList.add('step-lit');
+    });
+  }
+}
+
+window.addEventListener('scroll', updateProcessLine, { passive: true });
+updateProcessLine();
+
+/* ─── LIGHTBOX ───────────────────────────────────── */
+(function() {
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lb-img');
+
+  document.querySelectorAll('.g-item img').forEach(img => {
+    img.parentElement.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lbImg.src = ''; }, 300);
+  }
+
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('#lb-close')) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+})();
+</script>
+
+<!-- LIGHTBOX OVERLAY -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Uvećana slika">
+  <button id="lb-close" aria-label="Zatvori">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M3 3L17 17M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<style>
+  #lb {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(4,3,6,0.92);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+  }
+  #lb.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  #lb-img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+    transform: scale(0.94);
+    transition: transform 0.32s cubic-bezier(0.22,1,0.36,1);
+  }
+  #lb.open #lb-img { transform: scale(1); }
+  #lb-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  #lb-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+</style>
+</body>
+</html>
