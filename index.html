@@ -20,10 +20,10 @@
       --ink:        #F0EBE3;
       --ink2:       #857B72;
       --dim:        #524D48;
-      --border:     rgba(255,255,255,0.08);
-      --red:        #CC0000;
-      --red-h:      #E50000;
-      --red-glow:   rgba(204,0,0,0.15);
+      --border:     rgba(255,255,255,0.07);
+      --red:        #BE1931;
+      --red-h:      #D42045;
+      --red-glow:   rgba(190,25,49,0.15);
       --nav-h:      64px;
       --font-display: 'Unbounded', sans-serif;
       --font-body:    'DM Sans', sans-serif;
@@ -58,7 +58,7 @@
       border-bottom: 1px solid transparent;
     }
     #nav.scrolled {
-      background: rgba(8,7,10,0.92);
+      background: rgba(8,7,10,0.94);
       backdrop-filter: blur(12px);
       border-color: var(--border);
     }
@@ -92,7 +92,7 @@
       text-transform: uppercase;
       text-decoration: none;
       color: var(--red);
-      border: 1px solid rgba(204,0,0,0.4);
+      border: 1px solid rgba(190,25,49,0.4);
       padding: 8px 20px;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
@@ -156,7 +156,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--red);
-      border: 1px solid rgba(204,0,0,0.5);
+      border: 1px solid rgba(190,25,49,0.5);
       padding: 14px 32px;
       text-decoration: none;
     }
@@ -176,8 +176,8 @@
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(ellipse 70% 50% at 30% 60%, rgba(204,0,0,0.12) 0%, transparent 60%),
-        linear-gradient(to bottom, rgba(8,7,10,0.18) 0%, rgba(8,7,10,0.42) 45%, rgba(8,7,10,0.92) 100%),
+        radial-gradient(ellipse 70% 50% at 30% 60%, rgba(190,25,49,0.12) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(8,7,10,0.10) 0%, rgba(8,7,10,0.40) 45%, rgba(8,7,10,0.94) 100%),
         url('photos/new-one.png');
       background-size: cover;
       background-position: center 30%;
@@ -392,7 +392,7 @@
       content: '';
       position: absolute;
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(204,0,0,0.05) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(190,25,49,0.05) 0%, transparent 70%);
       left: 50%; top: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
@@ -431,18 +431,6 @@
       overflow: hidden;
     }
 
-    /* Video on slab top face */
-    .slab-video {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 0;
-      transition: opacity 0.7s ease;
-    }
-    .slab-video.playing { opacity: 1; }
-
     .slab-front {
       position: absolute;
       left: 0; bottom: 0;
@@ -460,16 +448,10 @@
     }
 
     .l-slab[data-idx="0"] { --t: 54px; }
-    .l-slab[data-idx="0"] .slab-top {
-      background-color: #0a0a0a;
-      background-image: url('photos/hf_20260514_223605_6401dd1b-ca1c-4058-8276-006adf62db41.png');
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+    .l-slab[data-idx="0"] .slab-top { background: #525050; }
     .l-slab[data-idx="0"] .slab-top::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(148deg, rgba(255,255,255,0.04) 0%, transparent 42%, rgba(0,0,0,0.18) 100%);
+      background: linear-gradient(148deg, rgba(255,255,255,0.08) 0%, transparent 42%, rgba(0,0,0,0.12) 100%);
       pointer-events: none; z-index: 1;
     }
     .l-slab[data-idx="0"] .slab-front {
@@ -479,16 +461,10 @@
     .l-slab[data-idx="0"] .slab-right { background: linear-gradient(90deg, #424040 0%, #4A4846 100%); }
 
     .l-slab[data-idx="1"] { --t: 48px; }
-    .l-slab[data-idx="1"] .slab-top {
-      background-color: #0a0a0a;
-      background-image: url('photos/hf_20260514_224052_ccb36984-7f79-40ae-9c9f-44f4028b9dad.png');
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+    .l-slab[data-idx="1"] .slab-top { background: #E07018; }
     .l-slab[data-idx="1"] .slab-top::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(145deg, rgba(255,228,135,0.06) 0%, transparent 52%, rgba(150,65,0,0.08) 100%);
+      background: linear-gradient(145deg, rgba(255,228,135,0.18) 0%, transparent 52%, rgba(150,65,0,0.16) 100%);
       pointer-events: none; z-index: 1;
     }
     .l-slab[data-idx="1"] .slab-front { background: linear-gradient(90deg, #A84E0C 0%, #BF6210 50%, #A84E0C 100%); }
@@ -496,49 +472,30 @@
 
     .l-slab[data-idx="2"] { --t: 4px; }
     .l-slab[data-idx="2"] .slab-top {
-      background-color: #0a0a0a;
-      background-image: url('photos/hf_20260514_223658_fd8f9362-a4d5-44c1-9996-d48b453aba05.png');
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    .l-slab[data-idx="2"] .slab-top::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(132deg, rgba(198,232,255,0.08) 0%, transparent 50%);
-      pointer-events: none; z-index: 1;
+      background: repeating-linear-gradient(28deg, transparent 0 20px, rgba(255,255,255,0.15) 20px 22px),
+                  repeating-linear-gradient(-22deg, transparent 0 15px, rgba(255,255,255,0.07) 15px 16px),
+                  linear-gradient(132deg, rgba(198,232,255,0.8) 0%, rgba(172,218,252,0.9) 45%, rgba(208,240,255,0.78) 100%);
     }
     .l-slab[data-idx="2"] .slab-front { background: rgba(128,196,238,0.72); }
     .l-slab[data-idx="2"] .slab-right { background: rgba(108,175,222,0.62); }
 
     .l-slab[data-idx="3"] { --t: 44px; }
-    .l-slab[data-idx="3"] .slab-top {
-      background-color: #0a0a0a;
-      background-image: url('photos/hf_20260514_223709_e2eb315c-deff-40a6-8b56-ba45968d1a5c.png');
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+    .l-slab[data-idx="3"] .slab-top { background: #C4C0BC; }
     .l-slab[data-idx="3"] .slab-top::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(148deg, rgba(255,255,255,0.06) 0%, transparent 44%, rgba(0,0,0,0.04) 100%);
+      background: linear-gradient(148deg, rgba(255,255,255,0.14) 0%, transparent 44%, rgba(0,0,0,0.04) 100%);
       pointer-events: none; z-index: 1;
     }
-    .l-slab[data-idx="3"] { outline: 1px solid rgba(204,0,0,0.45); filter: drop-shadow(0 0 20px rgba(204,0,0,0.2)); }
-    .l-slab[data-idx="3"].visible { filter: drop-shadow(0 0 40px rgba(204,0,0,0.35)) drop-shadow(0 0 80px rgba(204,0,0,0.12)); }
+    .l-slab[data-idx="3"] { outline: 1px solid rgba(190,25,49,0.45); filter: drop-shadow(0 0 20px rgba(190,25,49,0.2)); }
+    .l-slab[data-idx="3"].visible { filter: drop-shadow(0 0 40px rgba(190,25,49,0.35)) drop-shadow(0 0 80px rgba(190,25,49,0.12)); }
     .l-slab[data-idx="3"] .slab-front { background: linear-gradient(90deg, #6E6A66 0%, #868280 100%); }
     .l-slab[data-idx="3"] .slab-right { background: #5A5652; }
 
     .l-slab[data-idx="4"] { --t: 18px; }
-    .l-slab[data-idx="4"] .slab-top {
-      background-color: #0a0a0a;
-      background-image: url('photos/hf_20260514_223718_499f4dfb-27f6-4730-96fb-9b469f922041.png');
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+    .l-slab[data-idx="4"] .slab-top { background: #C08840; }
     .l-slab[data-idx="4"] .slab-top::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(145deg, rgba(255,228,170,0.06) 0%, transparent 50%, rgba(80,38,8,0.08) 100%);
+      background: linear-gradient(145deg, rgba(255,228,170,0.14) 0%, transparent 50%, rgba(80,38,8,0.12) 100%);
       pointer-events: none; z-index: 1;
     }
     .l-slab[data-idx="4"] .slab-front {
@@ -650,7 +607,7 @@
       margin-top: 24px;
       padding: 12px 16px;
       background: var(--red-glow);
-      border: 1px solid rgba(204,0,0,0.25);
+      border: 1px solid rgba(190,25,49,0.25);
     }
     .info-main-badge.show { display: flex; }
     .badge-dot {
@@ -788,7 +745,7 @@
     .svc-card:hover { background: var(--surface2); }
     .svc-card:hover::before { transform: scaleX(1); }
 
-    .svc-card[data-accent="1"] { --card-accent: #CC0000; }
+    .svc-card[data-accent="1"] { --card-accent: #BE1931; }
     .svc-card[data-accent="2"] { --card-accent: #5B8A9A; }
     .svc-card[data-accent="3"] { --card-accent: #D4A340; }
     .svc-card[data-accent="4"] { --card-accent: #7A8A9A; }
@@ -898,7 +855,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(8,7,10,0.6) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(8,7,10,0.65) 0%, transparent 60%);
       z-index: 1;
       pointer-events: none;
     }
@@ -908,7 +865,7 @@
       right: -12px;
       width: 80%;
       height: 80%;
-      border: 1px solid rgba(204,0,0,0.3);
+      border: 1px solid rgba(190,25,49,0.3);
       z-index: -1;
     }
     .whyus-content { }
@@ -945,7 +902,7 @@
     }
     .feature-icon {
       width: 32px; height: 32px;
-      border: 1px solid rgba(204,0,0,0.3);
+      border: 1px solid rgba(190,25,49,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -992,7 +949,7 @@
       height: 1px;
       background: linear-gradient(90deg,
         var(--red) 0%,
-        rgba(204,0,0,0.4) 60%,
+        rgba(190,25,49,0.4) 60%,
         var(--border) 100%);
       transform: scaleX(var(--line-progress, 0));
       transform-origin: left center;
@@ -1007,7 +964,7 @@
       bottom: 0;
       background: linear-gradient(to bottom,
         var(--red) 0%,
-        rgba(204,0,0,0.35) 60%,
+        rgba(190,25,49,0.35) 60%,
         var(--border) 100%);
       transform: scaleY(0);
       transform-origin: top center;
@@ -1037,9 +994,9 @@
     }
     /* Dot lights up as line reaches it */
     .process-step.step-lit .step-dot {
-      border-color: rgba(204,0,0,0.7);
+      border-color: rgba(190,25,49,0.7);
       background: var(--red-glow);
-      box-shadow: 0 0 16px rgba(204,0,0,0.18);
+      box-shadow: 0 0 16px rgba(190,25,49,0.18);
     }
     .process-step.step-lit .step-dot-num { color: var(--red); }
     .process-step:hover .step-dot {
@@ -1101,7 +1058,7 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(4, 220px);
+      grid-template-rows: repeat(3, 220px) 160px;
       gap: 3px;
     }
     .g-item {
@@ -1113,6 +1070,9 @@
     .g-item:first-child {
       grid-column: span 2;
       grid-row: span 2;
+    }
+    .g-item:nth-child(7) {
+      grid-column: span 3;
     }
     .g-item img {
       width: 100%; height: 100%;
@@ -1128,7 +1088,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(8,7,10,0.72) 0%, rgba(8,7,10,0.1) 55%, transparent 100%);
+      background: linear-gradient(to top, rgba(8,7,10,0.78) 0%, rgba(8,7,10,0.12) 55%, transparent 100%);
       pointer-events: none;
       transition: opacity 0.4s ease;
     }
@@ -1228,7 +1188,7 @@
       right: -200px;
       width: 600px; height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(204,0,0,0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(190,25,49,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
     .contact-grid {
@@ -1306,7 +1266,7 @@
     .form-group textarea::placeholder { color: var(--dim); }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus { border-color: rgba(204,0,0,0.5); }
+    .form-group textarea:focus { border-color: rgba(190,25,49,0.5); }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .form-submit {
       background: var(--red);
@@ -1483,7 +1443,7 @@
       }
       .process-step.step-lit .step-dot::before {
         background: var(--red);
-        box-shadow: 0 0 10px rgba(204,0,0,0.4);
+        box-shadow: 0 0 10px rgba(190,25,49,0.4);
       }
 
       /* Disable general rv/in for process steps — scroll-linked instead */
@@ -1599,9 +1559,161 @@
       /* Footer */
       .footer-desc { font-size: 13px; }
     }
+
+    /* ─── POLISH IMPROVEMENTS ─────────────────────────────── */
+
+    /* Grain texture overlay */
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9997;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      opacity: 0.048;
+      mix-blend-mode: overlay;
+    }
+
+    /* Nav: stronger scrolled glow */
+    #nav.scrolled {
+      background: rgba(8,7,10,0.94);
+      backdrop-filter: blur(20px) saturate(180%);
+      box-shadow: 0 1px 0 var(--border), 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    /* Section tag: left accent dash */
+    .section-tag {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    /* Service cards: glow box-shadow on hover */
+    .svc-card {
+      transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+      border: 1px solid var(--border);
+    }
+    .svc-card:hover {
+      box-shadow: 0 0 0 1px var(--card-accent, rgba(190,25,49,0.25)),
+                  0 24px 64px rgba(0,0,0,0.45),
+                  inset 0 0 60px rgba(190,25,49,0.03);
+      transform: translateY(-2px);
+    }
+    .svc-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(190,25,49,0.06) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .svc-card:hover::after { opacity: 1; }
+
+    /* Stats bar: subtle diagonal stripe texture */
+    .stats-bar {
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 20px,
+        rgba(255,255,255,0.025) 20px,
+        rgba(255,255,255,0.025) 40px
+      );
+      pointer-events: none;
+    }
+    .stat-item {
+      position: relative;
+      transition: background 0.2s ease;
+    }
+    .stat-item:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* Primary button: glow on hover */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:hover {
+      box-shadow: 0 0 24px rgba(190,25,49,0.4), 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* Hero: ambient glow behind title */
+    .hero-inner {
+      position: relative;
+    }
+    .hero-inner::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: -10%;
+      width: 70%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(190,25,49,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(40px);
+    }
+
+    /* Gallery: smooth scale + brightness on hover */
+    .g-item img {
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.4s ease;
+      filter: brightness(0.92) saturate(0.9);
+    }
+    .g-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(1.0) saturate(1.05);
+    }
+
+    /* Form inputs: smoother focus */
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      box-shadow: 0 0 0 1px rgba(190,25,49,0.6), 0 0 16px rgba(190,25,49,0.08);
+    }
+
+    /* Footer: subtle top gradient */
+    footer {
+      border-top: none;
+      background: linear-gradient(to bottom, var(--bg2) 0%, #0A0908 100%);
+      position: relative;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    }
   </style>
 </head>
 <body>
+<div class="grain-overlay" aria-hidden="true"></div>
 
 <!-- ══════════ NAV ══════════ -->
 <nav id="nav">
@@ -1609,7 +1721,7 @@
     <svg width="192" height="36" viewBox="0 0 326 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <text x="0" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#F0EBE3" letter-spacing="-2">Beton</text>
       <path d="M174 2 H322 V62 H174" fill="none" stroke="#F0EBE3" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-      <text x="185" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#CC0000" letter-spacing="-2">Tech</text>
+      <text x="185" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#BE1931" letter-spacing="-2">Tech</text>
     </svg>
   </a>
 
@@ -1642,7 +1754,6 @@
 
   <div class="hero-inner">
     <div class="hero-left">
-      <p class="hero-eyebrow">Hrvatska &nbsp;·&nbsp; Kalinovac &nbsp;·&nbsp; Betonski podovi</p>
       <h1 class="hero-title">
         Majstori<br>
         betonskih<br>
@@ -1686,57 +1797,31 @@
 
       <div class="scene" id="scene">
         <div class="stage" id="stage">
-
           <div class="l-slab" data-idx="0">
-            <div class="slab-top">
-              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/01-ab-ploca-poster.jpg">
-                <source src="/public/videos/floor-anatomy/01-ab-ploca.mp4" type="video/mp4">
-              </video>
-            </div>
+            <div class="slab-top"></div>
             <div class="slab-front"></div>
             <div class="slab-right"></div>
           </div>
-
           <div class="l-slab" data-idx="1">
-            <div class="slab-top">
-              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/02-izolacija-poster.jpg">
-                <source src="/public/videos/floor-anatomy/02-izolacija.mp4" type="video/mp4">
-              </video>
-            </div>
+            <div class="slab-top"></div>
             <div class="slab-front"></div>
             <div class="slab-right"></div>
           </div>
-
           <div class="l-slab" data-idx="2">
-            <div class="slab-top">
-              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/03-pe-folija-poster.jpg">
-                <source src="/public/videos/floor-anatomy/03-pe-folija.mp4" type="video/mp4">
-              </video>
-            </div>
+            <div class="slab-top"></div>
             <div class="slab-front"></div>
             <div class="slab-right"></div>
           </div>
-
           <div class="l-slab" data-idx="3">
-            <div class="slab-top">
-              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/04-estrih-poster.jpg">
-                <source src="/public/videos/floor-anatomy/04-estrih.mp4" type="video/mp4">
-              </video>
-            </div>
+            <div class="slab-top"></div>
             <div class="slab-front"></div>
             <div class="slab-right"></div>
           </div>
-
           <div class="l-slab" data-idx="4">
-            <div class="slab-top">
-              <video class="slab-video" muted playsinline loop preload="none" poster="/public/videos/floor-anatomy/05-podna-obloga-poster.jpg">
-                <source src="/public/videos/floor-anatomy/05-podna-obloga.mp4" type="video/mp4">
-              </video>
-            </div>
+            <div class="slab-top"></div>
             <div class="slab-front"></div>
             <div class="slab-right"></div>
           </div>
-
         </div>
       </div>
 
@@ -1797,8 +1882,8 @@
     <div class="svc-card rv" data-accent="1">
       <div class="svc-num">01</div>
       <svg class="svc-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="4" y="28" width="32" height="8" fill="rgba(204,0,0,0.15)" stroke="#CC0000" stroke-width="1"/>
-        <rect x="4" y="20" width="32" height="6" fill="rgba(204,0,0,0.08)" stroke="rgba(204,0,0,0.4)" stroke-width="1"/>
+        <rect x="4" y="28" width="32" height="8" fill="rgba(190,25,49,0.15)" stroke="#BE1931" stroke-width="1"/>
+        <rect x="4" y="20" width="32" height="6" fill="rgba(190,25,49,0.08)" stroke="rgba(190,25,49,0.4)" stroke-width="1"/>
         <rect x="4" y="12" width="32" height="6" fill="rgba(80,80,80,0.2)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
       </svg>
       <div class="svc-title">Cementni estrih</div>
@@ -2002,13 +2087,6 @@
       </div>
     </div>
     <div class="g-item">
-      <img src="photos/pool-wide.avif" alt="Bazen — betonska obloga oko bazena">
-      <div class="g-label">
-        <span class="g-label-type">Vanjska izvedba</span>
-        <span class="g-label-title">Betonska obloga — okoliš bazena</span>
-      </div>
-    </div>
-    <div class="g-item">
       <img src="photos/estrih-garage.avif" alt="Garaža — industrijski estrih">
       <div class="g-label">
         <span class="g-label-type">Garaža / pomoćni prostor</span>
@@ -2020,13 +2098,6 @@
       <div class="g-label">
         <span class="g-label-type">Vanjski objekt</span>
         <span class="g-label-title">Helikopter glazura — industrijski pod</span>
-      </div>
-    </div>
-    <div class="g-item">
-      <img src="photos/estrih2.jpg" alt="Estrih — završna obrada prostora">
-      <div class="g-label">
-        <span class="g-label-type">Stambeni prostor</span>
-        <span class="g-label-title">Cementni estrih — završna obrada</span>
       </div>
     </div>
   </div>
@@ -2132,7 +2203,7 @@
       <svg width="158" height="44" viewBox="0 0 326 84" fill="none" xmlns="http://www.w3.org/2000/svg">
         <text x="0" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#F0EBE3" letter-spacing="-2">Beton</text>
         <path d="M174 2 H322 V62 H174" fill="none" stroke="#F0EBE3" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
-        <text x="185" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#CC0000" letter-spacing="-2">Tech</text>
+        <text x="185" y="56" font-family="'Unbounded',sans-serif" font-size="54" font-weight="900" fill="#BE1931" letter-spacing="-2">Tech</text>
         <text x="0" y="80" font-family="'DM Mono',monospace" font-size="10" fill="rgba(240,235,227,0.38)" letter-spacing="5.5">BETONSKI PODOVI</text>
       </svg>
       <p class="footer-brand-desc">Majstori cementnih estriha i betonskih podova u cijeloj Hrvatskoj. Kvaliteta koja se mjeri na milimetre.</p>
@@ -2184,8 +2255,8 @@ const LAYERS = [
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const wrapper    = document.getElementById('layer-section');
-const stage      = document.getElementById('stage');
-const slabs      = [...document.querySelectorAll('.l-slab')];
+const stage  = document.getElementById('stage');
+const slabs  = [...document.querySelectorAll('.l-slab')];
 const dots       = [...document.querySelectorAll('.l-dot')];
 const infoNum    = document.getElementById('info-num');
 const infoName   = document.getElementById('info-name');
@@ -2240,10 +2311,9 @@ function tick() {
 
   let activeLayer = -1;
   slabs.forEach((slab, i) => {
-    const layer   = LAYERS[i];
+    const layer  = LAYERS[i];
     const visible = p >= layer.entry;
     if (visible) activeLayer = i;
-
     const targetZ = layer.restZ + (layer.spreadZ - layer.restZ) * spreadF;
     if (!visible) {
       slab.style.opacity = '0';
@@ -2252,16 +2322,6 @@ function tick() {
       slab.style.opacity = '1';
       slab.style.transform = `translateZ(${targetZ}px)`;
       if (i === 3) slab.classList.add('visible');
-    }
-
-    // Play/pause the video on this slab's top face
-    const video = slab.querySelector('.slab-video');
-    if (video && !REDUCED_MOTION) {
-      if (visible && video.paused) {
-        video.play().then(() => video.classList.add('playing')).catch(() => {});
-      } else if (!visible && !video.paused) {
-        video.pause();
-      }
     }
   });
 
@@ -2409,7 +2469,7 @@ updateProcessLine();
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: rgba(4,3,6,0.92);
+    background: rgba(4,3,6,0.93);
     backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
